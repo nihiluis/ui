@@ -1,0 +1,41 @@
+/* Import after Tailwind v4 in the consuming app's main stylesheet. */
+@import "./styles.css" layer(components);
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-subtle: var(--subtle);
+  --color-content: var(--text);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-on-accent: var(--on-accent);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --radius-precision: var(--radius);
+  --shadow-precision: var(--shadow);
+  --font-precision-sans: var(--font-sans);
+  --font-precision-mono: var(--font-mono);
+  --text-precision-xs: var(--text-xs);
+  --text-precision-sm: var(--text-sm);
+  --text-precision-body: var(--text-base);
+  --text-precision-lg: var(--text-lg);
+  --text-precision-xl: var(--text-xl);
+  --text-precision-display: var(--text-display);
+  --spacing-precision-1: var(--space-1);
+  --spacing-precision-2: var(--space-2);
+  --spacing-precision-3: var(--space-3);
+  --spacing-precision-4: var(--space-4);
+  --spacing-precision-5: var(--space-5);
+  --spacing-precision-6: var(--space-6);
+  --spacing-precision-8: var(--space-8);
+  --spacing-precision-10: var(--space-10);
+  --spacing-precision-12: var(--space-12);
+  --spacing-precision-16: var(--space-16);
+}
+
+/* Keep dark: utilities in sync with ThemeProvider rather than the OS. */
+@custom-variant dark (&:where([data-mode="dark"], [data-mode="dark"] *));

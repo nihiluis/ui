@@ -84,4 +84,8 @@ Run `npm run build` and `npm test`. Add meaningful behavior tests for complex ne
 
 ## Package consumption
 
-Release 0.0.1 exposes precision-ui, precision-ui/styles.css, precision-ui/tokens.json, and precision-ui/GUI.md. Inside this repository use src/system; in consuming apps use those package imports. React 19 and React DOM 19 are peer dependencies. Use npm run build:lib and npm pack when changing the release package. The GitHub tarball includes compiled ESM and declarations; the studio is excluded.
+Release 0.0.2 exposes precision-ui, precision-ui/styles.css, precision-ui/tokens.json, and precision-ui/GUI.md. Inside this repository use src/system; in consuming apps use those package imports. React 19 and React DOM 19 are peer dependencies. Use npm run build:lib and npm pack when changing the release package. The GitHub tarball includes compiled ESM and declarations; the studio is excluded.
+
+## Tailwind v4 integration
+
+In Tailwind apps, import precision-ui/tailwind.css after @import "tailwindcss" in the app stylesheet. Do not also import precision-ui/styles.css from CSS or JavaScript. The adapter puts component rules in the components layer, maps semantic token utilities with @theme inline, and maps dark: to [data-mode="dark"]. Keep ThemeProvider in the React tree. Use semantic colors (bg-surface, text-content, bg-accent, text-on-accent), rounded-precision, shadow-precision, precision font/type aliases, and spacing classes like p-precision-4. Responsive utilities and utility overrides work without !important. Tailwind v4 is an optional peer; this adapter must be processed by Tailwind v4. Plain CSS consumers keep using precision-ui/styles.css. Validate changes with npm run test:tailwind.

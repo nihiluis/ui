@@ -856,7 +856,7 @@ export default function App() {
           </span>
         </a>
         <div className="sidebar-caption">
-          DESIGN SYSTEM <Badge>v0.0.1</Badge>
+          DESIGN SYSTEM <Badge>v0.0.2</Badge>
         </div>
         <nav aria-label="Design system">
           {navigation.map(({ label, icon: Icon }) => (

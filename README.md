@@ -25,10 +25,10 @@ Open the local URL printed by Vite. `npm run build` checks types and produces th
 Install the versioned GitHub release package into each React 19 web app:
 
 ```sh
-npm install https://github.com/nihiluis/ui/releases/download/v0.0.1/precision-ui-0.0.1.tgz
+npm install https://github.com/nihiluis/ui/releases/download/v0.0.2/precision-ui-0.0.2.tgz
 ```
 
-For a private repository, download the asset using an authenticated GitHub session or `gh release download v0.0.1 --repo nihiluis/ui --pattern '*.tgz'`, then install the downloaded tarball. npm does not automatically authenticate private release download URLs. You can also install from GitHub with authenticated git access: `npm install github:nihiluis/ui#v0.0.1`; this builds the package through its prepare script.
+For a private repository, download the asset using an authenticated GitHub session or `gh release download v0.0.2 --repo nihiluis/ui --pattern '*.tgz'`, then install the downloaded tarball. npm does not automatically authenticate private release download URLs. You can also install from GitHub with authenticated git access: `npm install github:nihiluis/ui#v0.0.2`; this builds the package through its prepare script.
 
 ```tsx
 import { ThemeProvider, Button } from "precision-ui";
@@ -48,6 +48,32 @@ Import portable tokens from `precision-ui/tokens.json`. Agent guidance is includ
 `npm run build:lib` creates the ESM library, TypeScript declarations, CSS, and token JSON in dist-lib. `npm pack` builds an installable tarball. The studio build remains separate in dist. This package is marked private to prevent accidental npm registry publication; GitHub release tarball and git installation work independently of npm publishing.
 
 ThemeProvider sets variables on the document root, including portaled dialogs, and persists settings under precision-theme-v1. It manages one active global theme. Use separate application roots/documents for independently themed apps. For SSR, integrate server-provided initial theme settings before shipping to avoid a flash of the default appearance.
+
+## Tailwind CSS v4
+
+Tailwind support is optional. For apps using Tailwind v4, import this bridge in the app's main CSS, after Tailwind:
+
+```css
+@import "tailwindcss";
+@import "precision-ui/tailwind.css";
+```
+
+Import that app stylesheet once in your entry point and wrap the app in ThemeProvider as above. The bridge includes the component stylesheet in the components cascade layer, so Tailwind utilities override component defaults. Do not also import precision-ui/styles.css; loading it without a layer would override utilities. Use the Tailwind v4 Vite or PostCSS integration to compile the bridge; it is not standalone browser CSS.
+
+```tsx
+<Button variant="primary" className="w-full px-6 md:w-auto">
+  Create project
+</Button>
+<div className="bg-surface text-content rounded-precision p-precision-6">
+  Shared theme tokens, expressed as utilities.
+</div>
+```
+
+Semantic color utilities include bg-canvas, bg-surface, bg-subtle, text-content, text-muted, border-border, bg-accent, text-on-accent, and success/danger colors with their soft variants. They follow live theme, accent, and appearance changes. Shared scales expose rounded-precision, shadow-precision, font-precision-sans, font-precision-mono, text-precision-body (plus xs/sm/lg/xl/display), and spacing utilities such as p-precision-4 and gap-precision-2.
+
+The bridge maps dark: variants to ThemeProvider's data-mode="dark" attribute, so manual appearance changes and Tailwind dark utilities stay synchronized. These semantic colors usually remove the need for separate light/dark color classes. It does not import Tailwind itself, change your breakpoints, or require Tailwind for plain CSS consumers. Tailwind v3 has no dedicated adapter in this release.
+
+Run npm run test:tailwind to pack the library and verify a separate Tailwind v4 consumer's production build, computed utility overrides, responsive sizing, theme/mode updates, and dialog styling. It uses Playwright Chromium; install it with npx playwright install chromium if needed.
 
 ## Multiple themes
 
